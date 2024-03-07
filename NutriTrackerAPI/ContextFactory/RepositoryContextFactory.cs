@@ -11,7 +11,7 @@ public class RepositoryContextFactory:IDesignTimeDbContextFactory<RepositoryCont
         var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json").Build();
         var builder = new DbContextOptionsBuilder<RepositoryContext>().UseSqlServer(
-            configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("NutriTackerAPI"));
+            configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("NutriTrackerAPI"));
         return new RepositoryContext(builder.Options);
     }
 }
