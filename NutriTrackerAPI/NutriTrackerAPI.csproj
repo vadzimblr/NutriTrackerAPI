@@ -8,6 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.27" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.27" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.27" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
@@ -17,8 +19,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Controllers\Controllers.csproj" />
       <ProjectReference Include="..\Entities\Entities.csproj" />
       <ProjectReference Include="..\Repository\Repository.csproj" />
+      <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
 </Project>
