@@ -13,10 +13,10 @@ public abstract class RepositoryBase<T>: IRepositoryBase<T> where T : class
         _context = context;
     }
 
-    public IEnumerable<T> FindAll(bool trackChanges) =>
+    public IQueryable<T> FindAll(bool trackChanges) =>
         !trackChanges ? _context.Set<T>().AsNoTracking() : _context.Set<T>();
 
-    public IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
         !trackChanges ? _context.Set<T>().Where(expression).AsNoTracking() : _context.Set<T>().Where(expression);
     
 
