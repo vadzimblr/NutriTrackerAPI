@@ -30,6 +30,7 @@ builder.Services.AddControllers(opt =>
     
 });
 builder.Services.AddScoped<ProductEditPermissionFilter>();
+builder.Services.AddScoped<ProductParametersValidationFilter>();
 builder.Services.AddScoped<ValidationFilter>();
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
 {

@@ -36,7 +36,7 @@ public class ProductService:IProductService
     }
     public async Task<PagedList<ProductDto>> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
     {
-        var result = await _repositoryManager.Product.GetAllProductsAsync(trackChanges);
+        var result = await _repositoryManager.Product.GetAllProductsAsync(parameters,trackChanges);
         var resultDtos = _mapper.Map<IEnumerable<ProductDto>>(result);
         var resultPagedList = PagedList<ProductDto>.ToPagedList(resultDtos,parameters.PageNumber,parameters.PageSize);
         return resultPagedList;

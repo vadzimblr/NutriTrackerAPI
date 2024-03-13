@@ -1,6 +1,8 @@
 ﻿using Contracts.RepositoryContracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
+using Shared.RequestFeatures;
 
 namespace Repository;
 
@@ -9,9 +11,16 @@ public class ProductRepository:RepositoryBase<Product>,IProductRepository
     public ProductRepository(RepositoryContext context) : base(context)
     {
     }
-    public async Task<IEnumerable<Product>> GetAllProductsAsync(bool trackChanges)
+    public async Task<IEnumerable<Product>> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
     {
-        return await FindAll(trackChanges).ToListAsync();
+        return await FindAll(trackChanges)
+            .FilterProductsByCalories(parameters.MinCalories,parameters.MaxCalories)
+            .FilterProductsByCarbs(parameters.MinCarbs,parameters.MaxCarbs)
+            .FilterProductsByFat(parameters.MinFat,parameters.MaxFat)
+            .FilterProductsByProtein(parameters.MinProtein,parameters.MaxProtein)
+            .FilterProductsByServingSize(parameters.MinServingSize, parameters.MaxServingSize)
+            .Search(parameters.searchTerm)
+            .ToListAsync();
     }
 
     public async Task<Product> GetProductByIdAsync(Guid productId, bool trackChanges)

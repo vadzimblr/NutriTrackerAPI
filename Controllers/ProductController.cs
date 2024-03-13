@@ -26,6 +26,7 @@ public class ProductController:ControllerBase
     }
     
     [HttpGet]
+    [ServiceFilter(typeof(ProductParametersValidationFilter))]
     public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
     {
         var result =await _service.Product.GetAllProductsAsync(parameters,trackChanges:false);

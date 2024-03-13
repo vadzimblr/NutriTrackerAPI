@@ -21,6 +21,7 @@ public static class ExceptionHandlerExtension
                     context.Response.StatusCode = contextFeature.Error switch
                     {
                         NotFoundException => StatusCodes.Status404NotFound,
+                        RangeBadRequestException => StatusCodes.Status404NotFound,
                         _ => StatusCodes.Status500InternalServerError
                     };
                     await context.Response.WriteAsync(new ExceptionDetails
