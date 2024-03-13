@@ -1,4 +1,5 @@
-﻿using Contracts.ServiceContracts;
+﻿using System.Text.Json;
+using Contracts.ServiceContracts;
 using Controllers.ActionFilters;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dto.CreationResourcesDto;
 using Shared.Dto.UpdateResourcesDto;
+using Shared.RequestFeatures;
 
 namespace Controllers;
 [ApiController]
@@ -24,9 +26,10 @@ public class ProductController:ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllProducts()
+    public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
     {
-        var result =await _service.Product.GetAllProductsAsync(trackChanges:false);
+        var result =await _service.Product.GetAllProductsAsync(parameters,trackChanges:false);
+        Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(result.MetaData));
         return Ok(result);
     }
     

@@ -2,12 +2,13 @@
 using Shared.Dto.CreationResourcesDto;
 using Shared.Dto.ResponseDto;
 using Shared.Dto.UpdateResourcesDto;
+using Shared.RequestFeatures;
 
 namespace Contracts.ServiceContracts;
 
 public interface IProductService
 {
-    Task<IEnumerable<ProductDto>> GetAllProductsAsync(bool trackChanges);
+    Task<PagedList<ProductDto>> GetAllProductsAsync(ProductParameters parameters, bool trackChanges);
     Task<ProductDto> GetProductByIdAsync(Guid productId,bool trackChanges);
 
     Task<ProductDto> CreateProductAsync(CProductDto productDto, string userId);

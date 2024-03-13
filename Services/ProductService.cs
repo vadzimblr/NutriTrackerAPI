@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Shared.Dto.CreationResourcesDto;
 using Shared.Dto.ResponseDto;
 using Shared.Dto.UpdateResourcesDto;
+using Shared.RequestFeatures;
 
 namespace Services;
 
@@ -33,11 +34,12 @@ public class ProductService:IProductService
         _mapper = mapper;
         _userManager = userManager;
     }
-    public async Task<IEnumerable<ProductDto>> GetAllProductsAsync(bool trackChanges)
+    public async Task<PagedList<ProductDto>> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
     {
         var result = await _repositoryManager.Product.GetAllProductsAsync(trackChanges);
         var resultDtos = _mapper.Map<IEnumerable<ProductDto>>(result);
-        return resultDtos;
+        var resultPagedList = PagedList<ProductDto>.ToPagedList(resultDtos,parameters.PageNumber,parameters.PageSize);
+        return resultPagedList;
     }
 
     public async Task<ProductDto> GetProductByIdAsync(Guid productId, bool trackChanges)

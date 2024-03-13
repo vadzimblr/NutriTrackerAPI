@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Shared.Dto.CreationResourcesDto;
+﻿namespace Shared.Dto.CreationResourcesDto;
 
 public record CProductDto : ManipulationProductDto
 {
