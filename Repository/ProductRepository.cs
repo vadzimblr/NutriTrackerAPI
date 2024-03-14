@@ -21,6 +21,7 @@ public class ProductRepository:RepositoryBase<Product>,IProductRepository
             .FilterProductsByServingSize(parameters.MinServingSize, parameters.MaxServingSize)
             .Search(parameters.searchTerm)
             .ToListAsync();
+        
     }
 
     public async Task<Product> GetProductByIdAsync(Guid productId, bool trackChanges)

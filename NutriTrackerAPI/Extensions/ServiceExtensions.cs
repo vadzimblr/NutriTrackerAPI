@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AutoMapper;
+using Contracts;
 using Contracts.RepositoryContracts;
 using Contracts.ServiceContracts;
 using Entities.Models;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Services;
+using Shared.Dto.ResponseDto;
 
 namespace NutriTrackerAPI.Extensions;
 
@@ -76,5 +78,10 @@ public static class ServiceExtensions
                     };
                 }
             );
+    }
+
+    public static void ConfigureDataShaper(this IServiceCollection services)
+    {
+        services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
     }
 }

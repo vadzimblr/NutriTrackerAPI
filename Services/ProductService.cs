@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Dynamic;
+using AutoMapper;
+using Contracts;
 using Contracts.RepositoryContracts;
 using Contracts.ServiceContracts;
 using Entities.Exceptions;
@@ -16,7 +18,7 @@ public class ProductService:IProductService
     private readonly IRepositoryManager _repositoryManager;
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
-
+    private readonly IDataShaper<ProductDto> _dataShaper;
     private async Task<Product> GetProductIfExists(Guid productId, bool trackChanges)
     {
         var result = await _repositoryManager.Product.GetProductByIdAsync(productId, trackChanges);
@@ -28,25 +30,28 @@ public class ProductService:IProductService
         return result;
     }
     
-    public ProductService(IRepositoryManager repositoryManager, IMapper mapper, UserManager<User> userManager)
+    public ProductService(IRepositoryManager repositoryManager, IMapper mapper, UserManager<User> userManager, IDataShaper<ProductDto> dataShaper)
     {
         _repositoryManager = repositoryManager;
         _mapper = mapper;
         _userManager = userManager;
+        _dataShaper = dataShaper;
     }
-    public async Task<PagedList<ProductDto>> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
+    public async Task<(IEnumerable<ExpandoObject> products,MetaData metaData)> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
     {
         var result = await _repositoryManager.Product.GetAllProductsAsync(parameters,trackChanges);
         var resultDtos = _mapper.Map<IEnumerable<ProductDto>>(result);
         var resultPagedList = PagedList<ProductDto>.ToPagedList(resultDtos,parameters.PageNumber,parameters.PageSize);
-        return resultPagedList;
+        var shapedData = _dataShaper.ShapeData(resultPagedList, parameters.Fields);
+        return (shapedData,resultPagedList.MetaData);
     }
 
-    public async Task<ProductDto> GetProductByIdAsync(Guid productId, bool trackChanges)
+    public async Task<ExpandoObject> GetProductByIdAsync(Guid productId, ProductParameters parameters, bool trackChanges)
     {
         var result = await GetProductIfExists(productId, trackChanges);
         var resultDto = _mapper.Map<ProductDto>(result);
-        return resultDto;
+        var shapedData = _dataShaper.ShapeData(resultDto,parameters.Fields);
+        return shapedData;
     }
 
     public async Task<ProductDto> CreateProductAsync(CProductDto productDto, string userId)

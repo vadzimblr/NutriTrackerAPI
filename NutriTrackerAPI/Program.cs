@@ -32,6 +32,7 @@ builder.Services.AddControllers(opt =>
 builder.Services.AddScoped<ProductEditPermissionFilter>();
 builder.Services.AddScoped<ProductParametersValidationFilter>();
 builder.Services.AddScoped<ValidationFilter>();
+builder.Services.ConfigureDataShaper();
 builder.Services.Configure<ApiBehaviorOptions>(opt =>
 {
     opt.SuppressModelStateInvalidFilter = true;

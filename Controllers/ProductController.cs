@@ -30,14 +30,14 @@ public class ProductController:ControllerBase
     public async Task<IActionResult> GetAllProducts([FromQuery] ProductParameters parameters)
     {
         var result =await _service.Product.GetAllProductsAsync(parameters,trackChanges:false);
-        Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(result.MetaData));
-        return Ok(result);
+        Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(result.metaData));
+        return Ok(result.products);
     }
     
     [HttpGet("{productId:guid}",Name = "GetProductById")]
-    public async Task<IActionResult> GetProductById(Guid productId)
+    public async Task<IActionResult> GetProductById(Guid productId,[FromQuery] ProductParameters parameters)
     {
-        var result = await _service.Product.GetProductByIdAsync(productId, trackChanges: false);
+        var result = await _service.Product.GetProductByIdAsync(productId, parameters,trackChanges: false);
         return Ok(result);
     }
     
