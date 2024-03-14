@@ -3,7 +3,7 @@ using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Extensions;
 using Shared.RequestFeatures;
-
+using System.Linq.Dynamic.Core;
 namespace Repository;
 
 public class ProductRepository:RepositoryBase<Product>,IProductRepository
@@ -19,6 +19,7 @@ public class ProductRepository:RepositoryBase<Product>,IProductRepository
             .FilterProductsByFat(parameters.MinFat,parameters.MaxFat)
             .FilterProductsByProtein(parameters.MinProtein,parameters.MaxProtein)
             .FilterProductsByServingSize(parameters.MinServingSize, parameters.MaxServingSize)
+            .Sort(parameters.OrderBy)
             .Search(parameters.searchTerm)
             .ToListAsync();
         

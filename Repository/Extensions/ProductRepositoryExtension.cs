@@ -1,5 +1,6 @@
 ﻿using Entities.Models;
-
+using Repository.Utils;
+using System.Linq.Dynamic.Core;
 namespace Repository.Extensions;
 
 public static class ProductRepositoryExtension
@@ -33,5 +34,15 @@ public static class ProductRepositoryExtension
         }
         var searchTermToLowerCase = searchTerm.TrimStart().TrimEnd().ToLower();
         return products.Where(p => p.ProductName.TrimStart().TrimEnd().ToLower().Contains(searchTermToLowerCase));
+    }
+
+    public static IQueryable<Product> Sort(this IQueryable<Product> products, string? orderByQueryString)
+    {
+        if (string.IsNullOrWhiteSpace(orderByQueryString))
+            return products.OrderBy(p => p.ProductName);
+        var queryBuilder = OrderQueryBuilder.CreateOrderQuery<Product>(orderByQueryString);
+        if (string.IsNullOrWhiteSpace(queryBuilder))
+            return products.OrderBy(p => p.ProductName);
+        return products.OrderBy(queryBuilder);
     }
 }
