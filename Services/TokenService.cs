@@ -91,7 +91,8 @@ public class TokenService:ITokenService
     {
         var claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.Name, userEntity.UserName)
+            new Claim(ClaimTypes.Name, userEntity.UserName),
+            new Claim(ClaimTypes.NameIdentifier,userEntity.Id)
         };
         var roles = await _userManager.GetRolesAsync(userEntity);
         foreach (var role in roles)

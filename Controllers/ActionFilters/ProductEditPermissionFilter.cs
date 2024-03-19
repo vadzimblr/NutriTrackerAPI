@@ -1,31 +1,50 @@
-﻿using Contracts.ServiceContracts;
-using Entities.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Contracts.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Controllers.ActionFilters;
-
-public class ProductEditPermissionFilter:IAsyncActionFilter
+namespace Controllers.ActionFilters
 {
-    private readonly IServiceManager _service;
-    private readonly UserManager<User> _userManager;
+    public class ProductEditPermissionFilter : IAsyncActionFilter
+    {
+        private readonly IServiceManager _service;
+        private string? _userId;
 
-    public ProductEditPermissionFilter(IServiceManager service, UserManager<User> userManager)
-    {
-        _service = service;
-        _userManager = userManager;
-    }
-    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-    {
-        var productId =(Guid)context.ActionArguments.SingleOrDefault(p => p.Value is Guid).Value;
-        var isAdmin = context.HttpContext.User.IsInRole("Admin");
-        var user = await _userManager.FindByNameAsync(context.HttpContext.User.Identity.Name);
-        if (!await _service.Product.IsProductCreator(productId, user.Id) && !isAdmin)
+        public ProductEditPermissionFilter(IServiceManager service)
         {
-            context.Result = new ForbidResult();
-            return;
+            _service = service;
         }
-        await next();
+
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            var userIdClaim = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim != null)
+            {
+                _userId = userIdClaim.Value;
+            }
+
+            if (_userId == null)
+            {
+                context.Result = new ForbidResult();
+                return;
+            }
+            
+            if (!context.ActionArguments.TryGetValue("productId", out var productIdObj) || !(productIdObj is Guid productId))
+            {
+                context.Result = new BadRequestResult();
+                return;
+            }
+
+            var isAdmin = context.HttpContext.User.IsInRole("Admin");
+
+            if (!await _service.Product.IsProductCreator(productId, _userId) && !isAdmin)
+            {
+                context.Result = new ForbidResult();
+                return;
+            }
+
+            await next();
+        }
     }
 }

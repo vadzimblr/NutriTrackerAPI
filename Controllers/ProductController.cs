@@ -31,7 +31,9 @@ public class ProductController:ControllerBase
     {
         var result =await _service.Product.GetAllProductsAsync(parameters,trackChanges:false);
         Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(result.metaData));
+        
         return Ok(result.products);
+        
     }
     
     [HttpGet("{productId:guid}",Name = "GetProductById")]

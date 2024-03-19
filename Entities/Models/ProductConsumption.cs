@@ -11,6 +11,7 @@ public class ProductConsumption
     [Range(1, Int32.MaxValue )]
     public int ConsumedCalories { get; set; }
     public Product? ConsumedProduct { get; set; }
+    
     [ForeignKey("UserId")]
     public string UserId { get; set; }
 }

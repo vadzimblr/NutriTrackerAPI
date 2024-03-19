@@ -15,5 +15,8 @@ public class AutoMapper:Profile
         CreateMap<Product, ProductDto>();
         CreateMap<CProductDto, Product>();
         CreateMap<UProductDto, Product>().ReverseMap();
+        CreateMap<WaterConsumption, WaterConsumptionDto>();
+        CreateMap<CWaterConsumptionDto, WaterConsumption>();
+        CreateMap<UWaterConsumptionDto, WaterConsumption>().ReverseMap();
     }
 }

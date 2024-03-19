@@ -1,6 +1,6 @@
 ﻿namespace Shared.Dto.ResponseDto;
 
-public class ProductDto
+public record ProductDto
 {
     public Guid Id { get; init; }
     public string ProductName { get; init; }
