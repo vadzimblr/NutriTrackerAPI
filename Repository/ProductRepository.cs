@@ -14,6 +14,7 @@ public class ProductRepository:RepositoryBase<Product>,IProductRepository
     public async Task<IEnumerable<Product>> GetAllProductsAsync(ProductParameters parameters,bool trackChanges)
     {
         return await FindAll(trackChanges)
+            
             .FilterProductsByCalories(parameters.MinCalories,parameters.MaxCalories)
             .FilterProductsByCarbs(parameters.MinCarbs,parameters.MaxCarbs)
             .FilterProductsByFat(parameters.MinFat,parameters.MaxFat)
@@ -27,7 +28,8 @@ public class ProductRepository:RepositoryBase<Product>,IProductRepository
 
     public async Task<Product> GetProductByIdAsync(Guid productId, bool trackChanges)
     {
-        return await FindByCondition(p => p.Id.Equals(productId), trackChanges).SingleOrDefaultAsync();
+        return await FindByCondition(p => p.Id.Equals(productId), trackChanges)
+            .SingleOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Product>> GetAllProductsByAuthorId(Guid userId, bool trackChanges)

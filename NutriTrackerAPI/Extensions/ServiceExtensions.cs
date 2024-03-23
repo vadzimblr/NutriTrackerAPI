@@ -83,5 +83,6 @@ public static class ServiceExtensions
     public static void ConfigureDataShaper(this IServiceCollection services)
     {
         services.AddScoped<IDataShaper<ProductDto>, DataShaper<ProductDto>>();
+        services.AddScoped<IDataShaper<WaterConsumptionDto>, DataShaper<WaterConsumptionDto>>();
     }
 }

@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Security.Claims;
+using System.Text.Json;
 using Contracts.ServiceContracts;
 using Controllers.ActionFilters;
+using Controllers.Extensions;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,12 +19,11 @@ namespace Controllers;
 public class ProductController:ControllerBase
 {
     private readonly IServiceManager _service;
-    private readonly UserManager<User> _userManager;
     
-    public ProductController(IServiceManager service, UserManager<User> userManager)
+    
+    public ProductController(IServiceManager service)
     {
         _service = service;
-        _userManager = userManager;
     }
     
     [HttpGet]
@@ -47,8 +48,7 @@ public class ProductController:ControllerBase
     [ServiceFilter(typeof(ValidationFilter))]
     public async Task<IActionResult> CreateProduct([FromBody] CProductDto? productDto)
     {
-        var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-        var result = await _service.Product.CreateProductAsync(productDto,user.Id);
+        var result = await _service.Product.CreateProductAsync(productDto,HttpContext.GetUserId());
         return CreatedAtRoute("GetProductById",new {productId = result.Id},result);
     }
     

@@ -16,13 +16,13 @@ public class ServiceManager:IServiceManager
     private readonly Lazy<IProductService> _productService;
     private readonly Lazy<IWaterConsumptionService> _waterConsumptionService;
     public ServiceManager(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, IRepositoryManager repositoryManager
-    ,IDataShaper<ProductDto> dataShaper)
+    ,IDataShaper<ProductDto> productDataShaper, IDataShaper<WaterConsumptionDto> waterConsumptionDataShaper)
     {
         _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper));
         _tokenService = new Lazy<ITokenService>(() => new TokenService(configuration,userManager));
-        _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager, mapper, userManager,dataShaper));
+        _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager, mapper, userManager,productDataShaper));
         _waterConsumptionService =
-            new Lazy<IWaterConsumptionService>(() => new WaterConsumptionService(mapper, repositoryManager));
+            new Lazy<IWaterConsumptionService>(() => new WaterConsumptionService(mapper, repositoryManager,waterConsumptionDataShaper));
     }
     
     public IAuthenticationService Authentication => _authenticationService.Value;
