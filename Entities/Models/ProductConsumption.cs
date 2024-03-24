@@ -10,6 +10,8 @@ public class ProductConsumption
     public DateTime ConsumptionTime { get; set; }
     [Range(1, Int32.MaxValue )]
     public int ConsumedCalories { get; set; }
+    [ForeignKey("ConsumedProductId")]
+    public Guid? ConsumedProductId { get; set; }
     public Product? ConsumedProduct { get; set; }
     [ForeignKey("UserId")]
     public string UserId { get; set; }

@@ -17,6 +17,7 @@ public class ProductConsumptionRepository:RepositoryBase<ProductConsumption>, IP
     {
         return await FindByCondition(p => (p.UserId.Equals(userId)),trackChanges)
             .FilterByConsumedCalories(parameters.MinConsumedCalories,parameters.MaxConsumedCalories)
+            .Include(p=>p.ConsumedProduct)
             .ToListAsync();
     }
 
@@ -25,6 +26,7 @@ public class ProductConsumptionRepository:RepositoryBase<ProductConsumption>, IP
     {
         return await FindByCondition(p => (p.UserId.Equals(userId) && p.ConsumptionTime.Date.Equals(time.Date)),trackChanges)
             .FilterByConsumedCalories(parameters.MinConsumedCalories,parameters.MaxConsumedCalories)
+            .Include(p=>p.ConsumedProduct)
             .ToListAsync();
     }
 

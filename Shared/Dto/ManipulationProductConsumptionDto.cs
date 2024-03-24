@@ -7,5 +7,5 @@ public record ManipulationProductConsumptionDto
 {
     [Range(1, int.MaxValue)]
     public int ConsumedCalories { get; set; }
-    public Product? ConsumedProduct { get; set; }
+    public Guid? ConsumedProductId { get;set; }
 }
