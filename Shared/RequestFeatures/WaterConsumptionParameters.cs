@@ -3,6 +3,6 @@
 public class WaterConsumptionParameters:RequestParameters
 {
     public int MinAmount { get; set; }
-    public int MaxAmount { get; set; } = Int32.MaxValue;
+    public int MaxAmount { get; set; } = int.MaxValue;
     public bool ValidateAmountRange => MinAmount <= MaxAmount;
 }

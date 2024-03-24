@@ -10,4 +10,8 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.27" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Entities\Entities.csproj" />
+    </ItemGroup>
+
 </Project>
