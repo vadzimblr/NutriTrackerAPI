@@ -8,7 +8,7 @@ public record ManipulationProductDto
     [MaxLength(64,ErrorMessage = "Maximum length for the Product name is 64 characters.")]
     public string ProductName { get; init; }
     [Required(ErrorMessage = "Calories is required field.")]
-    [Range(1, Int32.MaxValue)]
+    [Range(1, int.MaxValue)]
     public double Calories { get; init; }  
     [MaxLength(256,ErrorMessage = "Maximum length for the Description is 256 characters.")]
     public string? Description { get; init; }

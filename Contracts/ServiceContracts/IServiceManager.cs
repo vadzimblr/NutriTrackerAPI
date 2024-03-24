@@ -6,4 +6,5 @@ public interface IServiceManager
     IAuthenticationService Authentication { get; }
     IProductService Product { get; }
     IWaterConsumptionService WaterConsumption { get; }
+    IProductConsumptionService ProductConsumption { get; }
 }

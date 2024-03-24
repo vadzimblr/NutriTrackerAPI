@@ -11,7 +11,7 @@ public interface IProductConsumptionRepository
     Task<IEnumerable<ProductConsumption>>GetAllProductConsumptionByDateAsync(
         ProductConsumptionParameters parameters, string userId, DateTime time, bool trackChanges);
 
-    Task<ProductConsumption> GetProductConsumptionByIdAsync(ProductConsumptionParameters parameters, string userId,
+    Task<ProductConsumption> GetProductConsumptionByIdAsync(string userId,
         Guid productConsumptionId,
         bool trackChanges);
 

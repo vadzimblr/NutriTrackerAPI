@@ -28,7 +28,7 @@ public class ProductConsumptionRepository:RepositoryBase<ProductConsumption>, IP
             .ToListAsync();
     }
 
-    public async Task<ProductConsumption> GetProductConsumptionByIdAsync(ProductConsumptionParameters parameters, string userId, Guid productConsumptionId,
+    public async Task<ProductConsumption> GetProductConsumptionByIdAsync(string userId, Guid productConsumptionId,
         bool trackChanges)
     {
         return await FindByCondition(p => (p.UserId.Equals(userId) && p.Id.Equals(productConsumptionId)),trackChanges)

@@ -1,0 +1,3 @@
+﻿namespace Shared.Dto.UpdateResourcesDto;
+
+public record UProductConsumptionDto:ManipulationProductConsumptionDto;
