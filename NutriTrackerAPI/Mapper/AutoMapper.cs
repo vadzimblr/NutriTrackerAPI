@@ -21,5 +21,6 @@ public class AutoMapper:Profile
         CreateMap<ProductConsumption, ProductConsumptionDto>();
         CreateMap<CProductConsumptionDto, ProductConsumption>();
         CreateMap<UProductConsumptionDto, ProductConsumption>().ReverseMap();
+        CreateMap<Limit, ManipulationLimitDto>().ReverseMap();
     }
 }

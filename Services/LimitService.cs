@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Contracts.RepositoryContracts;
 using Contracts.ServiceContracts;
+using Entities.Exceptions;
+using Entities.Models;
 using Shared.Dto.UpdateResourcesDto;
 
 namespace Services;
@@ -15,13 +17,22 @@ public class LimitService : ILimitService
         _mapper = mapper;
         _repositoryManager = repositoryManager;
     }
-    public Task<ManipulationLimitDto> GetLimit(string userId, bool trackChanges)
+    public async Task<ManipulationLimitDto> GetLimit(string userId, bool trackChanges)
     {
-        throw new NotImplementedException();
+        var limitEntity = await _repositoryManager.Limit.GetLimit(userId, trackChanges);
+        if (limitEntity is null)
+        {
+            throw new LimitNotFoundException();
+        }
+
+        var limitDto = _mapper.Map<ManipulationLimitDto>(limitEntity);
+        return limitDto;
     }
 
-    public Task CreateLimit(ManipulationLimitDto limitDto)
+    public async Task CreateLimit(ManipulationLimitDto limitDto)
     {
-        throw new NotImplementedException();
+        var limitEntity = _mapper.Map<Limit>(limitDto);
+         _repositoryManager.Limit.CreateLimit(limitEntity);
+         await _repositoryManager.SaveAsync();
     }
 }
