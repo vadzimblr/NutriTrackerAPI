@@ -26,9 +26,10 @@ public class LimitController:ControllerBase
 
     [HttpPost]
     [ServiceFilter(typeof(ValidationFilter))]
-    public async Task<IActionResult> UpdateLimits([FromBody] ManipulationLimitDto? limitDto)
+    public async Task<IActionResult> UpdateLimits( [FromBody] ManipulationLimitDto? limitDto)
     {
-        await _serviceManager.Limit.CreateLimit(limitDto);
+        await _serviceManager.Limit.CreateLimit(HttpContext.GetUserId(),limitDto);
+        
         return StatusCode(201);
     }
 }

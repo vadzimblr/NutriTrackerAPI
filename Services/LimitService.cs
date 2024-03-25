@@ -29,9 +29,10 @@ public class LimitService : ILimitService
         return limitDto;
     }
 
-    public async Task CreateLimit(ManipulationLimitDto limitDto)
+    public async Task CreateLimit(string userId,ManipulationLimitDto limitDto)
     {
         var limitEntity = _mapper.Map<Limit>(limitDto);
+        limitEntity.UserId = userId;
          _repositoryManager.Limit.CreateLimit(limitEntity);
          await _repositoryManager.SaveAsync();
     }
