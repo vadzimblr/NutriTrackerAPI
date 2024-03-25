@@ -16,6 +16,7 @@ public class ServiceManager:IServiceManager
     private readonly Lazy<IProductService> _productService;
     private readonly Lazy<IWaterConsumptionService> _waterConsumptionService;
     private readonly Lazy<IProductConsumptionService> _productConsumptionService;
+    private readonly Lazy<ILimitService> _limitService;
     public ServiceManager(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, IRepositoryManager repositoryManager
     ,IDataShaper<ProductDto> productDataShaper, IDataShaper<WaterConsumptionDto> waterConsumptionDataShaper, IDataShaper<ProductConsumptionDto> productConsumptionDataShaper)
     {
@@ -26,6 +27,7 @@ public class ServiceManager:IServiceManager
             new Lazy<IWaterConsumptionService>(() => new WaterConsumptionService(mapper, repositoryManager,waterConsumptionDataShaper));
         _productConsumptionService = new Lazy<IProductConsumptionService>(() =>
             new ProductConsumptionService(mapper, repositoryManager, productConsumptionDataShaper));
+        _limitService = new Lazy<ILimitService>(() => new LimitService(mapper,repositoryManager));
     }
     
     public IAuthenticationService Authentication => _authenticationService.Value;
@@ -33,4 +35,5 @@ public class ServiceManager:IServiceManager
     public IProductService Product => _productService.Value;
     public IWaterConsumptionService WaterConsumption => _waterConsumptionService.Value;
     public IProductConsumptionService ProductConsumption => _productConsumptionService.Value;
+    public ILimitService Limit => _limitService.Value;
 }

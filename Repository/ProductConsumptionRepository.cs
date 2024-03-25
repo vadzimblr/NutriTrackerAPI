@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using Contracts.RepositoryContracts;
+﻿using Contracts.RepositoryContracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Extensions;

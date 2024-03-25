@@ -7,4 +7,5 @@ public interface IServiceManager
     IProductService Product { get; }
     IWaterConsumptionService WaterConsumption { get; }
     IProductConsumptionService ProductConsumption { get; }
+    ILimitService Limit { get; }
 }
