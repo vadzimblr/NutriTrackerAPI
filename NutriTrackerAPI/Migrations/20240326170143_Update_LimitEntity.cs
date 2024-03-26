@@ -26,12 +26,12 @@ namespace NutriTrackerAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1493220f-d8bf-4176-a4c6-72b16521ca8d", null, "Admin", "ADMIN" });
+                values: new object[] { "1294b2e0-f589-4a36-b18e-b18480ab1a89", null, "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "77b6f5b4-9993-446e-b952-13624a256293", null, "User", "USER" });
+                values: new object[] { "86b26379-17d1-4e5b-9727-f708e10fe4cf", null, "User", "USER" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -39,12 +39,12 @@ namespace NutriTrackerAPI.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1493220f-d8bf-4176-a4c6-72b16521ca8d");
+                keyValue: "1294b2e0-f589-4a36-b18e-b18480ab1a89");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "77b6f5b4-9993-446e-b952-13624a256293");
+                keyValue: "86b26379-17d1-4e5b-9727-f708e10fe4cf");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Time",

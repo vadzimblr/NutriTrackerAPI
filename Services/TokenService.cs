@@ -95,9 +95,16 @@ public class TokenService:ITokenService
             new Claim(ClaimTypes.NameIdentifier,userEntity.Id)
         };
         var roles = await _userManager.GetRolesAsync(userEntity);
-        foreach (var role in roles)
+        if (roles != null)
         {
-            claims.Add(new Claim(ClaimTypes.Role,role));
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role,role));
+            }
+        }
+        else
+        {
+            claims.Add(new Claim(ClaimTypes.Role,"User"));
         }
         return claims;
     }

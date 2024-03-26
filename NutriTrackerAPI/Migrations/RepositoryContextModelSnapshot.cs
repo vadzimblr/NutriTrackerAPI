@@ -254,13 +254,13 @@ namespace NutriTrackerAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "77b6f5b4-9993-446e-b952-13624a256293",
+                            Id = "86b26379-17d1-4e5b-9727-f708e10fe4cf",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1493220f-d8bf-4176-a4c6-72b16521ca8d",
+                            Id = "1294b2e0-f589-4a36-b18e-b18480ab1a89",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
