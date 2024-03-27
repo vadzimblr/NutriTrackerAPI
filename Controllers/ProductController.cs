@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
+using Asp.Versioning;
 using Contracts.ServiceContracts;
 using Controllers.ActionFilters;
 using Controllers.Extensions;
@@ -14,8 +15,11 @@ using Shared.RequestFeatures;
 
 namespace Controllers;
 [ApiController]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
 [Authorize]
-[Route("api/product")]
+[Route("api/{v:apiversion}/product")]
+
 public class ProductController:ControllerBase
 {
     private readonly IServiceManager _service;

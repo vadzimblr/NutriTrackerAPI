@@ -1,4 +1,5 @@
-﻿using Contracts.ServiceContracts;
+﻿using Asp.Versioning;
+using Contracts.ServiceContracts;
 using Controllers.ActionFilters;
 using Controllers.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +11,11 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Controllers;
 [ApiController]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
 [Authorize]
-[Route("api/waterconsumption")]
+[Route("api/{v:apiversion}/waterconsumption")]
+
 public class WaterConsumptionController:ControllerBase
 {
     private readonly IServiceManager _service;

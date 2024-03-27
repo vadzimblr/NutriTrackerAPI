@@ -1,11 +1,15 @@
-﻿using Contracts.ServiceContracts;
+﻿using Asp.Versioning;
+using Contracts.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dto;
 
 namespace Controllers;
 [ApiController]
-[Route("api/authentication")]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/{v:apiversion}/authentication")]
+
 public class AuthenticationController:ControllerBase
 {
     private readonly IServiceManager _service; 

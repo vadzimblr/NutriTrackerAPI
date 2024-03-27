@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Asp.Versioning;
 using Contracts.ServiceContracts;
 using Controllers.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +11,10 @@ using Shared.RequestFeatures;
 namespace Controllers;
 
 [ApiController]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
 [Authorize]
-[Route("api/productconsumption")]
+[Route("api/{v:apiversion}/productconsumption")]
 public class ProductConsumptionController:ControllerBase
 {
     private readonly IServiceManager _serviceManager;

@@ -42,7 +42,8 @@ builder.Services.Configure<ApiBehaviorOptions>(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.ConfigureSwagger();
+builder.Services.ConfigureVersioning();
 var app = builder.Build();
 app.ConfigureExceptionHandler();
 

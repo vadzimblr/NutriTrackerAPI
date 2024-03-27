@@ -90,4 +90,18 @@ public class TokenServiceTests
         //Assert
         await act.Should().ThrowAsync<SecurityTokenException>();
     }
+
+    [Fact]
+    public async Task RevokeRefreshToken_WithInvalidUsername_ShouldThrowException()
+    {
+        //Arange
+        var invalidUsername = "~~~$#$@#@#invalidUser";
+        _userManagerMock.Setup(u => u.FindByNameAsync(invalidUsername)).ReturnsAsync((User)null);
+        
+        //Act
+        var act = async () => await _tokenService.RevokeRefreshToken(invalidUsername);
+        
+        //Assert
+        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("User not found");
+    }
 }

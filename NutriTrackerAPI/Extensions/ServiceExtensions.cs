@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Asp.Versioning;
 using AutoMapper;
 using Contracts;
 using Contracts.RepositoryContracts;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repository;
 using Services;
 using Shared.Dto.ResponseDto;
@@ -86,4 +88,46 @@ public static class ServiceExtensions
         services.AddScoped<IDataShaper<WaterConsumptionDto>, DataShaper<WaterConsumptionDto>>();
         services.AddScoped<IDataShaper<ProductConsumptionDto>, DataShaper<ProductConsumptionDto>>();
     }
+
+    public static void ConfigureVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(opt =>
+        {
+            opt.ReportApiVersions = true;
+            opt.AssumeDefaultVersionWhenUnspecified = true;
+            opt.DefaultApiVersion = new ApiVersion(1, 0);
+            opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
+        });
+    }
+    public static void ConfigureSwagger(this IServiceCollection services)
+    {
+        services.AddSwaggerGen(s =>
+        {
+            s.SwaggerDoc("v1",new OpenApiInfo{Title = "NutriTrackerAPI", Version = "v1"});
+            s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Place to add JWT with Bearer",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+            s.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer",
+                        },
+                        Name ="Bearer"
+                    },
+                    new List<string>()
+                }
+            });
+        });
+    }
+    
 }
